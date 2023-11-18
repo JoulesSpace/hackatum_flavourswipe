@@ -1,10 +1,23 @@
 # Hackatum FlavourSwipe
 
+**Tech Stack**
+
+|  | Tech                  |
+| --- |-----------------------|
+| Frontend | Flutter               |
+| Backend | Python, Django, SQLite |
+
 ## Frontend
 
 ## Backend
 
-At first, we have to move to the 'backend' and run our database migrations.
+To get started, we need a working Python environment.
+We need to move to the 'backend' directory and install all dependencies:
+```
+pip install -r requirements.txt
+```
+
+Now, run our database migrations.
 ```
 python manage.py migrate
 ```
