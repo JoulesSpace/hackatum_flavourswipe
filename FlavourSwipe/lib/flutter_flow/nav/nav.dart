@@ -67,63 +67,53 @@ class AppStateNotifier extends ChangeNotifier {
   }
 }
 
-GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
-      initialLocation: '/',
-      debugLogDiagnostics: true,
-      refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) => appStateNotifier.loggedIn
-          ? const SwipePageWidget()
-          : const SwipePageWidget(),
-      routes: [
-        FFRoute(
-          name: '_initialize',
-          path: '/',
-          builder: (context, _) => appStateNotifier.loggedIn
-              ? const SwipePageWidget()
-              : const SwipePageWidget(),
-        ),
-        FFRoute(
-          name: 'ProfilePage',
-          path: '/profilePage',
-          builder: (context, params) => const ProfilePageWidget(),
-        ),
-        FFRoute(
-          name: 'SwipePage',
-          path: '/swipePage',
-          builder: (context, params) => const SwipePageWidget(),
-        ),
-        FFRoute(
-          name: 'login',
-          path: '/login',
-          builder: (context, params) => const LoginWidget(),
-        ),
-        FFRoute(
-          name: 'CreateAccount1',
-          path: '/createAccount1',
-          builder: (context, params) => const CreateAccount1Widget(),
-        ),
-        FFRoute(
-          name: 'SwipeDetailPage',
-          path: '/swipeDetailPage',
-          builder: (context, params) => const SwipeDetailPageWidget(),
-        ),
-        FFRoute(
-          name: 'Checkout',
-          path: '/checkout',
-          builder: (context, params) => const CheckoutWidget(),
-        ),
-        FFRoute(
-          name: 'RankingPage',
-          path: '/rankingPage',
-          builder: (context, params) => const RankingPageWidget(),
-        ),
-        FFRoute(
-          name: 'onboarding',
-          path: '/onboarding',
-          builder: (context, params) => const OnboardingWidget(),
-        )
-      ].map((r) => r.toRoute(appStateNotifier)).toList(),
-    );
+GoRouter createRouter(AppStateNotifier appStateNotifier) {
+  return GoRouter(
+    initialLocation: '/',
+    debugLogDiagnostics: true,
+    refreshListenable: appStateNotifier,
+    routes: [
+      GoRoute(
+        path: '/',
+        builder: (context, state) => appStateNotifier.loggedIn
+            ? const SwipePageWidget()
+            : const LoginWidget(),
+      ),
+      GoRoute(
+        path: '/profile',
+        builder: (context, state) => const ProfilePageWidget(),
+      ),
+      GoRoute(
+        path: '/swipe',
+        builder: (context, state) => const SwipePageWidget(),
+      ),
+      GoRoute(
+        path: '/login',
+        builder: (context, state) => const LoginWidget(),
+      ),
+      GoRoute(
+        path: '/createAccount',
+        builder: (context, state) => const CreateAccount1Widget(),
+      ),
+      GoRoute(
+        path: '/swipeDetail',
+        builder: (context, state) => const SwipeDetailPageWidget(),
+      ),
+      GoRoute(
+        path: '/checkout',
+        builder: (context, state) => const CheckoutWidget(),
+      ),
+      GoRoute(
+        path: '/ranking',
+        builder: (context, state) => const RankingPageWidget(),
+      ),
+      GoRoute(
+        path: '/onboarding',
+        builder: (context, state) => const OnboardingWidget(),
+      ),
+    ],
+  );
+}
 
 extension NavParamExtensions on Map<String, String?> {
   Map<String, String> get withoutNulls => Map.fromEntries(
