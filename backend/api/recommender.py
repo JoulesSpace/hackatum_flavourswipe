@@ -16,20 +16,30 @@ def get_recipes(conn):
     recipes = pd.read_sql_query("SELECT * FROM api_recipe", conn)
     recipe_to_ingridient = pd.read_sql_query("SELECT * FROM api_recipe_ingredients", conn)
     recipes = recipes.merge(recipe_to_ingridient, left_on='id', right_on='recipe_id')
-    recipes = pd.DataFrame(recipes.groupby(['recipe_id', 'name'])['ingredient_id'].apply(list))
+    recipes = pd.DataFrame(recipes.groupby(['recipe_id', 'name', 'description'])['ingredient_id'].apply(list))
     recipes = recipes.reset_index().to_dict('records')
 
+    feedback = pd.read_sql_query("SELECT * FROM api_userfeedback", conn)
+    feedback = pd.DataFrame(feedback.groupby(['recipe_id'])['feedback'].apply(sum))
+    feedback = feedback.reset_index().to_dict('records')
+    for recipe in recipes:
+        recipe['feedback'] = 0
+        for feedback_item in feedback:
+            if feedback_item['recipe_id'] == recipe['recipe_id']:
+                recipe['feedback'] += feedback_item['feedback']
 
     ingredients = pd.read_sql_query("SELECT * FROM api_ingredient", conn)
+    print([k for k in recipes[0].keys()])
     for recipe in recipes:
         recipe['ingredient_str'] = [ingredients[ingredients['id'] == ingredient_id]['name'].values[0] for ingredient_id in recipe['ingredient_id']]
         recipe['ingredient_str'] = ' '.join(recipe['ingredient_str'])
-        recipe['feedback'] = random.randint(-1, 1) # TODO: get feedback from database
+        # REMOVE THIS IF PROFILE DESCRIPTION SHOULD NOT INFLUENCE RESULT
+        recipe['ingredient_str'] += ' ' + recipe['description']
         
     # E.g.:
     # [{'recipe_id': 1, 'ingredient_id': [1, 2, 3], 'ingredient_str': 'ingredient1 ingredient2 ingredient3'}, ...]
 
-      
+    
     return recipes
 
 
@@ -79,6 +89,7 @@ def get_recommendation(idx, recipes, similarities, random_top_n=0):
 
     # Sort the recipes based on the similarity scores
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+
 
 
     # Get the recipe indices
