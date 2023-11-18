@@ -64,7 +64,11 @@ class _SwipeDetailPageWidgetState extends State<SwipeDetailPageWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              context.pop();
+              try {
+                GoRouter.of(context).pop();
+              } catch (e) {
+                print('Fehler beim Zurückkehren: $e');
+              }
             },
           ),
           actions: const [],
@@ -413,10 +417,10 @@ class _SwipeDetailPageWidgetState extends State<SwipeDetailPageWidget> {
                                         style: FlutterFlowTheme.of(context)
                                             .bodyLarge
                                             .override(
-                                              fontFamily: 'Readex Pro',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              color: const Color(0xFF101213),
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.w500,
                                             ),
                                       ),
                                     ),
@@ -429,10 +433,10 @@ class _SwipeDetailPageWidgetState extends State<SwipeDetailPageWidget> {
                                         style: FlutterFlowTheme.of(context)
                                             .bodyLarge
                                             .override(
-                                              fontFamily: 'Readex Pro',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              color: const Color(0xFF101213),
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.w500,
                                             ),
                                       ),
                                     ),

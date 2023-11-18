@@ -328,9 +328,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       // Call your custom login function
                                       await loginUser(username, password)
                                           .then((_) {
-                                        // Navigate to the next screen upon successful login
-                                        context.goNamedAuth(
-                                            'SwipePage', context.mounted);
+                                        GoRouter.of(context).go('/swipe');
                                       }).catchError((error) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
