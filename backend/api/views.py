@@ -1,13 +1,9 @@
-from django import HttpResponse
-from django.contrib import User, Group
-from rest_framework import viewsets, permissions
+from django.contrib.auth.models import User, Group
+from django.http import HttpResponse
+from rest_framework import viewsets
+from rest_framework import permissions
 
 from api.serializers import UserSerializer, GroupSerializer
-
-
-# Create your views here.
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -26,3 +22,6 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+def index(request):
+    return HttpResponse("Hello, world. You're at the polls index.")
