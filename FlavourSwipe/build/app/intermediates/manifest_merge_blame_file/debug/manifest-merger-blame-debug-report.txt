@@ -1,0 +1,188 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.hackatum.flavourswipe"
+4    android:versionCode="1"
+5    android:versionName="1.0.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="33" />
+10    <!--
+11         Flutter needs it to communicate with the running application
+12         to allow setting breakpoints, to provide hot reload, etc.
+13    -->
+14    <uses-permission android:name="android.permission.INTERNET" />
+14-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:4:5-66
+14-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:4:22-64
+15
+16    <application
+16-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:7:5-61:19
+17        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+17-->[androidx.core:core:1.6.0] C:\Users\julia\.gradle\caches\transforms-3\448e12895481b74f12aa96a40a56e1d8\transformed\core-1.6.0\AndroidManifest.xml:24:18-86
+18        android:debuggable="true"
+19        android:icon="@mipmap/ic_launcher"
+19-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:10:9-43
+20        android:label="FlavourSwipe"
+20-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:8:9-37
+21        android:requestLegacyExternalStorage="true" >
+21-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:11:9-52
+22        <activity
+22-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:13:9-51:20
+23            android:name="com.hackatum.flavourswipe.MainActivity"
+23-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:14:13-41
+24            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+24-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:18:13-163
+25            android:exported="true"
+25-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:15:13-36
+26            android:hardwareAccelerated="true"
+26-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:19:13-47
+27            android:launchMode="singleTop"
+27-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:16:13-43
+28            android:theme="@style/LaunchTheme"
+28-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:17:13-47
+29            android:windowSoftInputMode="adjustResize" >
+29-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:20:13-55
+30
+31            <!--
+32                 Specifies an Android theme to apply to this Activity as soon as
+33                 the Android process has started. This theme is visible to the user
+34                 while the Flutter UI initializes. After that, this theme continues
+35                 to determine the Window background behind the Flutter UI.
+36            -->
+37            <meta-data
+37-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:25:13-28:17
+38                android:name="io.flutter.embedding.android.NormalTheme"
+38-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:26:15-70
+39                android:resource="@style/NormalTheme" />
+39-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:27:15-52
+40            <!--
+41                 Displays an Android View that continues showing the launch screen
+42                 Drawable until Flutter paints its first frame, then this splash
+43                 screen fades out. A splash screen is useful to avoid any visual
+44                 gap between the end of Android's launch screen and the painting of
+45                 Flutter's first frame.
+46            -->
+47            <meta-data
+47-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:34:13-37:17
+48                android:name="io.flutter.embedding.android.SplashScreenDrawable"
+48-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:35:15-79
+49                android:resource="@drawable/launch_background" />
+49-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:36:15-61
+50
+51            <intent-filter>
+51-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:38:13-41:29
+52                <action android:name="android.intent.action.MAIN" />
+52-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:39:17-68
+52-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:39:25-66
+53
+54                <category android:name="android.intent.category.LAUNCHER" />
+54-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:40:17-76
+54-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:40:27-74
+55            </intent-filter>
+56            <!-- Deep linking -->
+57            <meta-data
+57-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:43:13-90
+58                android:name="flutter_deeplinking_enabled"
+58-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:43:24-66
+59                android:value="true" />
+59-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:43:67-87
+60
+61            <intent-filter android:autoVerify="true" >
+61-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:44:13-49:29
+61-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:44:28-53
+62                <action android:name="android.intent.action.VIEW" />
+62-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:45:17-69
+62-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:45:25-66
+63
+64                <category android:name="android.intent.category.DEFAULT" />
+64-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:46:17-76
+64-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:46:27-73
+65                <category android:name="android.intent.category.BROWSABLE" />
+65-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:47:17-78
+65-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:47:27-75
+66
+67                <data
+67-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:48:17-87
+68                    android:host="flavourswipe.com"
+68-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:48:53-84
+69                    android:scheme="flavourswipe" />
+69-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:48:23-52
+70            </intent-filter>
+71        </activity>
+72
+73        <!--
+74             Don't delete the meta-data below.
+75             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+76        -->
+77        <meta-data
+77-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:55:9-57:33
+78            android:name="flutterEmbedding"
+78-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:56:13-44
+79            android:value="2" />
+79-->C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\android\app\src\main\AndroidManifest.xml:57:13-30
+80
+81        <activity
+81-->[:url_launcher_android] C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\build\url_launcher_android\intermediates\merged_manifest\debug\AndroidManifest.xml:10:9-13:74
+82            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+82-->[:url_launcher_android] C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\build\url_launcher_android\intermediates\merged_manifest\debug\AndroidManifest.xml:11:13-74
+83            android:exported="false"
+83-->[:url_launcher_android] C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\build\url_launcher_android\intermediates\merged_manifest\debug\AndroidManifest.xml:12:13-37
+84            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+84-->[:url_launcher_android] C:\Users\julia\AndroidStudioProjects\freshfinesse-flutterflow\build\url_launcher_android\intermediates\merged_manifest\debug\AndroidManifest.xml:13:13-71
+85
+86        <uses-library
+86-->[androidx.window:window:1.0.0-beta04] C:\Users\julia\.gradle\caches\transforms-3\3547045148f823ae82ba5f00da62432e\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40
+87            android:name="androidx.window.extensions"
+87-->[androidx.window:window:1.0.0-beta04] C:\Users\julia\.gradle\caches\transforms-3\3547045148f823ae82ba5f00da62432e\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:26:13-54
+88            android:required="false" />
+88-->[androidx.window:window:1.0.0-beta04] C:\Users\julia\.gradle\caches\transforms-3\3547045148f823ae82ba5f00da62432e\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:27:13-37
+89        <uses-library
+89-->[androidx.window:window:1.0.0-beta04] C:\Users\julia\.gradle\caches\transforms-3\3547045148f823ae82ba5f00da62432e\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:28:9-30:40
+90            android:name="androidx.window.sidecar"
+90-->[androidx.window:window:1.0.0-beta04] C:\Users\julia\.gradle\caches\transforms-3\3547045148f823ae82ba5f00da62432e\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:29:13-51
+91            android:required="false" />
+91-->[androidx.window:window:1.0.0-beta04] C:\Users\julia\.gradle\caches\transforms-3\3547045148f823ae82ba5f00da62432e\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:30:13-37
+92
+93        <activity
+93-->[com.google.android.gms:play-services-auth:20.4.1] C:\Users\julia\.gradle\caches\transforms-3\1e872a2f80685e6a488770ecfb5a5bc8\transformed\jetified-play-services-auth-20.4.1\AndroidManifest.xml:23:9-27:75
+94            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+94-->[com.google.android.gms:play-services-auth:20.4.1] C:\Users\julia\.gradle\caches\transforms-3\1e872a2f80685e6a488770ecfb5a5bc8\transformed\jetified-play-services-auth-20.4.1\AndroidManifest.xml:24:13-93
+95            android:excludeFromRecents="true"
+95-->[com.google.android.gms:play-services-auth:20.4.1] C:\Users\julia\.gradle\caches\transforms-3\1e872a2f80685e6a488770ecfb5a5bc8\transformed\jetified-play-services-auth-20.4.1\AndroidManifest.xml:25:13-46
+96            android:exported="false"
+96-->[com.google.android.gms:play-services-auth:20.4.1] C:\Users\julia\.gradle\caches\transforms-3\1e872a2f80685e6a488770ecfb5a5bc8\transformed\jetified-play-services-auth-20.4.1\AndroidManifest.xml:26:13-37
+97            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+97-->[com.google.android.gms:play-services-auth:20.4.1] C:\Users\julia\.gradle\caches\transforms-3\1e872a2f80685e6a488770ecfb5a5bc8\transformed\jetified-play-services-auth-20.4.1\AndroidManifest.xml:27:13-72
+98        <!--
+99            Service handling Google Sign-In user revocation. For apps that do not integrate with
+100            Google Sign-In, this service will never be started.
+101        -->
+102        <service
+102-->[com.google.android.gms:play-services-auth:20.4.1] C:\Users\julia\.gradle\caches\transforms-3\1e872a2f80685e6a488770ecfb5a5bc8\transformed\jetified-play-services-auth-20.4.1\AndroidManifest.xml:33:9-37:51
+103            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+103-->[com.google.android.gms:play-services-auth:20.4.1] C:\Users\julia\.gradle\caches\transforms-3\1e872a2f80685e6a488770ecfb5a5bc8\transformed\jetified-play-services-auth-20.4.1\AndroidManifest.xml:34:13-89
+104            android:exported="true"
+104-->[com.google.android.gms:play-services-auth:20.4.1] C:\Users\julia\.gradle\caches\transforms-3\1e872a2f80685e6a488770ecfb5a5bc8\transformed\jetified-play-services-auth-20.4.1\AndroidManifest.xml:35:13-36
+105            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+105-->[com.google.android.gms:play-services-auth:20.4.1] C:\Users\julia\.gradle\caches\transforms-3\1e872a2f80685e6a488770ecfb5a5bc8\transformed\jetified-play-services-auth-20.4.1\AndroidManifest.xml:36:13-107
+106            android:visibleToInstantApps="true" />
+106-->[com.google.android.gms:play-services-auth:20.4.1] C:\Users\julia\.gradle\caches\transforms-3\1e872a2f80685e6a488770ecfb5a5bc8\transformed\jetified-play-services-auth-20.4.1\AndroidManifest.xml:37:13-48
+107
+108        <activity
+108-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\julia\.gradle\caches\transforms-3\9aacd92044d3c0fced5d96d094537c9f\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
+109            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+109-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\julia\.gradle\caches\transforms-3\9aacd92044d3c0fced5d96d094537c9f\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:19-85
+110            android:exported="false"
+110-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\julia\.gradle\caches\transforms-3\9aacd92044d3c0fced5d96d094537c9f\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:22:19-43
+111            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+111-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\julia\.gradle\caches\transforms-3\9aacd92044d3c0fced5d96d094537c9f\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:21:19-78
+112
+113        <meta-data
+113-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\julia\.gradle\caches\transforms-3\45b55c87021c9ab508d82f4ad609d95c\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
+114            android:name="com.google.android.gms.version"
+114-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\julia\.gradle\caches\transforms-3\45b55c87021c9ab508d82f4ad609d95c\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
+115            android:value="@integer/google_play_services_version" />
+115-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\julia\.gradle\caches\transforms-3\45b55c87021c9ab508d82f4ad609d95c\transformed\jetified-play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
+116    </application>
+117
+118</manifest>

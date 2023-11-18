@@ -1,4 +1,3 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -229,7 +228,8 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
           automaticallyImplyLeading: false,
           actions: [
             Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
               child: FlutterFlowIconButton(
                 borderColor: Colors.transparent,
                 borderRadius: 30.0,
@@ -261,7 +261,8 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                   borderRadius: BorderRadius.circular(50.0),
                 ),
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(2.0, 2.0, 2.0, 2.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(2.0, 2.0, 2.0, 2.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(60.0),
                     child: Image.network(
@@ -274,7 +275,8 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                 ),
               ).animateOnPageLoad(animationsMap['cardOnPageLoadAnimation']!),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                 child: Text(
                   'Andrea Davis',
                   style: FlutterFlowTheme.of(context).headlineSmall.override(
@@ -286,7 +288,8 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                 ).animateOnPageLoad(animationsMap['textOnPageLoadAnimation1']!),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                 child: Text(
                   'andrea@domainname.com',
                   style: FlutterFlowTheme.of(context).titleSmall.override(
@@ -305,7 +308,8 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                 color: Color(0xFFE0E3E7),
               ).animateOnPageLoad(animationsMap['dividerOnPageLoadAnimation']!),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -317,7 +321,8 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                     ),
                   ),
                   child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(2.0, 2.0, 2.0, 2.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        2.0, 2.0, 2.0, 2.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -353,8 +358,9 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                             activeTrackColor: const Color(0x3439D2C0),
                             dense: false,
                             controlAffinity: ListTileControlAffinity.trailing,
-                            contentPadding: const EdgeInsetsDirectional.fromSTEB(
-                                12.0, 0.0, 4.0, 0.0),
+                            contentPadding:
+                                const EdgeInsetsDirectional.fromSTEB(
+                                    12.0, 0.0, 4.0, 0.0),
                           ),
                         ),
                       ],
@@ -364,7 +370,8 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                     animationsMap['containerOnPageLoadAnimation1']!),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -376,8 +383,8 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                     ),
                   ),
                   child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(8.0, 12.0, 8.0, 12.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        8.0, 12.0, 8.0, 12.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -412,7 +419,8 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                     animationsMap['containerOnPageLoadAnimation2']!),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
@@ -424,8 +432,8 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                     ),
                   ),
                   child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(8.0, 12.0, 8.0, 12.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        8.0, 12.0, 8.0, 12.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -460,11 +468,11 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                     animationsMap['containerOnPageLoadAnimation3']!),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                 child: FFButtonWidget(
                   onPressed: () async {
                     GoRouter.of(context).prepareAuthEvent();
-                    await authManager.signOut();
                     GoRouter.of(context).clearRedirectLocation();
 
                     context.goNamedAuth('SwipeDetailPage', context.mounted);
@@ -473,9 +481,10 @@ class _ProfilePageWidgetState extends State<ProfilePageWidget>
                   options: FFButtonOptions(
                     width: 150.0,
                     height: 44.0,
-                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 0.0, 0.0, 0.0),
+                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 0.0, 0.0, 0.0),
                     color: const Color(0xFFF1F4F8),
                     textStyle: FlutterFlowTheme.of(context).bodyLarge.override(
                           fontFamily: 'Plus Jakarta Sans',

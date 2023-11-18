@@ -1,9 +1,13 @@
 from django.contrib.auth.models import User, Group
 from django.http import HttpResponse
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework import permissions
+from rest_framework.decorators import api_view, schema
+from rest_framework.response import Response
+from rest_framework.schemas import AutoSchema
+from rest_framework.views import APIView
 
-from api.models import Recipe, Ingredient
+from api.models import Recipe, Ingredient, UserFeedback
 from api.serializers import UserSerializer, GroupSerializer, RecipeSerializer, IngredientSerializer
 
 
@@ -45,3 +49,24 @@ class IngredientViewSet(viewsets.ModelViewSet):
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
+
+
+class CustomAutoSchema(AutoSchema):
+    def get_link(self, path, method, base_url):
+        return
+
+
+class LikeView(APIView):
+    def get(self, request, pk):
+        feedback = UserFeedback(feedback=1, recipe_id=pk, user=request.user)
+        feedback.save()
+        # Implement logic to handle liking
+        return Response({'message': 'Liked successfully!'}, status=status.HTTP_200_OK)
+
+
+class DislikeView(APIView):
+    def get(self, request, pk):
+        feedback = UserFeedback(feedback=-1, recipe_id=pk, user=request.user)
+        feedback.save()
+        # Implement logic to handle disliking
+        return Response({'message': 'Disliked successfully!'}, status=status.HTTP_200_OK)

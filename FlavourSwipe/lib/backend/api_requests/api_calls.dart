@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
@@ -29,7 +29,7 @@ class UsersCall {
       apiUrl: 'http://127.0.0.1:8000/api/users/',
       callType: ApiCallType.GET,
       headers: {},
-      params: {},
+      params: {"username": "", "email": ""},
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,
