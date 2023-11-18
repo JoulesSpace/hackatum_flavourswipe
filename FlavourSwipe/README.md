@@ -1,16 +1,12 @@
-# flavourswipe
+##Project Description
+This README provides instructions on how to set up and run a FlutterFlow project in Android Studio or Visual Studio Code. FlutterFlow is a visual builder for Flutter apps, allowing the creation of mobile applications with little to no coding.
 
-A new Flutter project for Hackatum.
+##Prerequisites
+Before you begin, ensure you have the following installed:
 
-## Getting Started
+##Flutter SDK
+Android Studio or Visual Studio Code
+Git (optional, for version control)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+##Android Studio / VS Code
+flutter pub get
