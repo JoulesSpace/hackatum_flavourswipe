@@ -1,4 +1,5 @@
-import '/auth/firebase_auth/auth_util.dart';
+import 'dart:convert';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -6,6 +7,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'login_model.dart';
 export 'login_model.dart';
+import 'package:http/http.dart' as http;
+
+// Django Backend Call
+Future<void> loginUser(String username, String password) async {
+  var url = Uri.parse('http://10.0.2.2:8000/api/recipe/');
+  var response =
+      await http.post(url, body: {'username': username, 'password': password});
+
+  if (response.statusCode == 200) {
+    var data = json.decode(response.body);
+    print("data:\n");
+    print(data);
+  } else {
+    // Handle errors
+  }
+}
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({super.key});
@@ -48,7 +65,6 @@ class _LoginWidgetState extends State<LoginWidget> {
         ),
       );
     }
-
     return GestureDetector(
       onTap: () => _model.unfocusNode.canRequestFocus
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -148,7 +164,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       controller: _model.emailAddressController,
                                       focusNode: _model.emailAddressFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [AutofillHints.email],
+                                      autofillHints: const [
+                                        AutofillHints.email
+                                      ],
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelText: 'Email',
@@ -219,7 +237,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       controller: _model.passwordController,
                                       focusNode: _model.passwordFocusNode,
                                       autofocus: true,
-                                      autofillHints: const [AutofillHints.password],
+                                      autofillHints: const [
+                                        AutofillHints.password
+                                      ],
                                       obscureText: !_model.passwordVisibility,
                                       decoration: InputDecoration(
                                         labelText: 'Password',
@@ -300,27 +320,33 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       0.0, 0.0, 0.0, 16.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      GoRouter.of(context).prepareAuthEvent();
+                                      var username =
+                                          _model.emailAddressController.text;
+                                      var password =
+                                          _model.passwordController.text;
 
-                                      final user =
-                                          await authManager.signInWithEmail(
-                                        context,
-                                        _model.emailAddressController.text,
-                                        _model.passwordController.text,
-                                      );
-                                      if (user == null) {
-                                        return;
-                                      }
-
-                                      context.goNamedAuth(
-                                          'SwipePage', context.mounted);
+                                      // Call your custom login function
+                                      await loginUser(username, password)
+                                          .then((_) {
+                                        // Navigate to the next screen upon successful login
+                                        context.goNamedAuth(
+                                            'SwipePage', context.mounted);
+                                      }).catchError((error) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                              content:
+                                                  Text('Login failed: $error')),
+                                        );
+                                      });
                                     },
                                     text: 'Sign In',
                                     options: FFButtonOptions(
                                       width: 370.0,
                                       height: 44.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 0.0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
                                       iconPadding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 0.0, 0.0),
@@ -347,35 +373,46 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 12.0, 0.0, 12.0),
-                                  child: RichText(
-                                    textScaleFactor:
-                                        MediaQuery.of(context).textScaleFactor,
-                                    text: TextSpan(
-                                      children: [
-                                        const TextSpan(
-                                          text: 'Don\'t have an account? ',
-                                          style: TextStyle(),
-                                        ),
-                                        TextSpan(
-                                          text: ' Sign Up here',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFF4B39EF),
-                                                fontSize: 14.0,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                        )
-                                      ],
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Plus Jakarta Sans',
-                                            color: const Color(0xFF101213),
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w500,
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      context.pushNamed('CreateAccount1');
+                                    },
+                                    child: RichText(
+                                      textScaleFactor: MediaQuery.of(context)
+                                          .textScaleFactor,
+                                      text: TextSpan(
+                                        children: [
+                                          const TextSpan(
+                                            text: 'Don\'t have an account? ',
+                                            style: TextStyle(),
                                           ),
+                                          TextSpan(
+                                            text: ' Sign Up here',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily:
+                                                      'Plus Jakarta Sans',
+                                                  color:
+                                                      const Color(0xFF4B39EF),
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                          )
+                                        ],
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Plus Jakarta Sans',
+                                              color: const Color(0xFF101213),
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -396,8 +433,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                 Expanded(
                   flex: 6,
                   child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        16.0, 16.0, 16.0, 16.0),
                     child: Container(
                       width: 100.0,
                       height: double.infinity,
