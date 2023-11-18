@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 
 from api.models import Recipe, Ingredient, UserFeedback
 from api.serializers import UserSerializer, GroupSerializer, RecipeSerializer, IngredientSerializer
+from api.recommender import get_next_recommendation
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -47,8 +48,29 @@ class IngredientViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+def recommend(request, id):
+    """
+    Recommend a recipe based on the recipe with the given id
+
+    :param request: HTTP request
+    :param id: id of the recipe to base the recommendation on
+    :return: HTTP response
+    """
+
+    # We have to start with some recommendation.
+    # For testing, we use id=1
+    # We then start the recommendation based on the recipe with id 1
+    # We recommend similar recipes to the recipe with id 1
+    # Based on the user feedback in the database we adjust the recommendations by adjusting the similarity between recipes
+
+    elem = Recipe.objects.filter(id=id)
+    if len(elem) == 0:
+        # TODO: Alternatively return random recipe in the error case
+        return HttpResponse(f"Recipe with id {id} does not exist")
+
+    recommendation = get_next_recommendation(id)
+    return HttpResponse(f"{recommendation}")
+
 
 
 class CustomAutoSchema(AutoSchema):
