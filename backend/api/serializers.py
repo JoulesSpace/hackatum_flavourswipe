@@ -16,13 +16,16 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url', 'name']
 
 
-class RecipeSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Recipe
-        fields = ['url', 'name', 'description', 'difficulty', 'duration', 'image_id']
-
-
-class IngredientSerializer(serializers.HyperlinkedModelSerializer):
+class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
         fields = ['url', 'name']
+
+
+class RecipeSerializer(serializers.HyperlinkedModelSerializer):
+    ingredients = IngredientSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Recipe
+        fields = ['url', 'name', 'description', 'difficulty', 'duration', 'ingredients', 'image_id']
+
