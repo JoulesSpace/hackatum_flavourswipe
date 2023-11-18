@@ -3,6 +3,8 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 import random
+from threading import local
+import json
 
 def get_recipes(conn):
     """
@@ -14,8 +16,6 @@ def get_recipes(conn):
     recipes = pd.read_sql_query("SELECT * FROM api_recipe", conn)
     recipe_to_ingridient = pd.read_sql_query("SELECT * FROM api_recipe_ingredients", conn)
     recipes = recipes.merge(recipe_to_ingridient, left_on='id', right_on='recipe_id')
-    # recipes = pd.DataFrame(recipes.groupby('recipe_id')['ingredient_id'].apply(list))
-    # group by recipe_id and name
     recipes = pd.DataFrame(recipes.groupby(['recipe_id', 'name'])['ingredient_id'].apply(list))
     recipes = recipes.reset_index().to_dict('records')
 
@@ -24,12 +24,10 @@ def get_recipes(conn):
     for recipe in recipes:
         recipe['ingredient_str'] = [ingredients[ingredients['id'] == ingredient_id]['name'].values[0] for ingredient_id in recipe['ingredient_id']]
         recipe['ingredient_str'] = ' '.join(recipe['ingredient_str'])
-        # random feedback -1, 0, 1
-        recipe['feedback'] = random.randint(-1, 1)
+        recipe['feedback'] = random.randint(-1, 1) # TODO: get feedback from database
         
     # E.g.:
-    # [{'recipe_id': 1, 'ingredient_id': [1, 2, 3], 'ingredient_str': 'flour sugar salt'},
-    #  {'recipe_id': 2, 'ingredient_id': [2, 3, 4], 'ingredient_str': 'sugar salt butter'}]
+    # [{'recipe_id': 1, 'ingredient_id': [1, 2, 3], 'ingredient_str': 'ingredient1 ingredient2 ingredient3'}, ...]
 
       
     return recipes
@@ -62,7 +60,7 @@ def get_similarities(recipes, feedback_weight = 0.1):
 
  
 
-def get_recommendation(recipe_id, recipes, similarities, random_top_n=0):
+def get_recommendation(idx, recipes, similarities, random_top_n=0):
     """
     Get recommendations for a recipe
 
@@ -72,13 +70,9 @@ def get_recommendation(recipe_id, recipes, similarities, random_top_n=0):
     :param random_top_n: number of top recommendations to randomly select from
     :return: list of recommended recipes
     """
-    # Get the index of the recipe that matches the id
-    idx = [recipe['recipe_id'] for recipe in recipes].index(recipe_id)
 
     # Get the pairwsie similarity scores of all recipes with that recipe
     sim_scores = list(enumerate(similarities[idx]))
-
-    print(sim_scores)
 
     # remove the recipe itself from the list
     sim_scores.pop(idx)
@@ -97,20 +91,37 @@ def get_recommendation(recipe_id, recipes, similarities, random_top_n=0):
     return selected_recipes 
 
 
+# Create a thread-local storage to hold SQLite connections
+thread_local_storage = local()
 
-def main():
-    conn = sqlite3.connect("db.sqlite3")
+def get_sqlite_connection():
+    """
+    Get a SQLite connection for the current thread
+
+    :return: SQLite connection
+    """
+
+    # Check if the current thread already has a connection
+    if not hasattr(thread_local_storage, "connection") or thread_local_storage.connection is None:
+        # If not, create a new connection
+        thread_local_storage.connection = sqlite3.connect("db.sqlite3")
+    
+    return thread_local_storage.connection
+
+
+def get_next_recommendation(recipe_id):
+    conn = get_sqlite_connection()
     recipes = get_recipes(conn)
+
+    # We have translate the database id to the index in the recipes list
+    print(recipe_id)
+    recipes_idx = [recipe['recipe_id'] for recipe in recipes].index(recipe_id)
+
     similarities = get_similarities(recipes, feedback_weight=0.3)
-    idx = [recipe['recipe_id'] for recipe in recipes].index(1)
+    recommendations = get_recommendation(recipes_idx, recipes, similarities)
+    
 
-    selected_recipe = recipes[idx]
-    recommendations = get_recommendation(1, recipes, similarities)
-    feedback = [recipe['feedback'] for recipe in recipes]
-    recipe_names = [recipe['name'] for recipe in recipes]
-
-    # print what the initial recipe was, what feedback the user had and what the recommendations are
-    print("Recipe:", selected_recipe)
-    print("Names:", recipe_names)
-    print("Feedback:", feedback)
-    print("Recommendations:", [recipe['name'] for recipe in recommendations])
+    # load from database based on recipe_id
+    recommeded_id = recommendations[0]['recipe_id']
+    selected_recipe = pd.read_sql_query("SELECT * FROM api_recipe WHERE id = " + str(recommeded_id), conn).to_dict('records')
+    return json.dumps(selected_recipe)

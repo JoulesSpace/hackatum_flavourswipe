@@ -12,7 +12,7 @@ router.register(r'ingredient', views.IngredientViewSet)
 from . import views
 
 urlpatterns = [
-    #path("", views.index, name="index"),
+    path("recommend/<int:id>/", views.recommend, name="recommend"),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('like/<int:pk>/', LikeView.as_view(), name='like'),
