@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "747241603580",
+    "project_id": "flavour-swipe-nmm2od",
+    "storage_bucket": "flavour-swipe-nmm2od.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:747241603580:android:2b3239e62ead2f3b64f279",
+        "android_client_info": {
+          "package_name": "com.hackatum.flavourswipe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPkkOo-h6hWdakGGqvXDkxju2UWXhmoF0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
