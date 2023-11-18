@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
@@ -24,8 +25,12 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 class RecipeSerializer(serializers.HyperlinkedModelSerializer):
     ingredients = IngredientSerializer(many=True, read_only=True)
+    image_url = serializers.SerializerMethodField()
+
+    def get_image_url(self, obj):
+        return settings.STATIC_URL + obj.image_id
 
     class Meta:
         model = Recipe
-        fields = ['url', 'name', 'description', 'difficulty', 'duration', 'ingredients', 'image_id']
+        fields = ['url', 'name', 'description', 'difficulty', 'duration', 'ingredients', 'image_id', 'image_url']
 
