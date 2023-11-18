@@ -6,6 +6,7 @@ router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'recipe', views.RecipeViewSet)
+router.register(r'ingredient', views.IngredientViewSet)
 
 from . import views
 

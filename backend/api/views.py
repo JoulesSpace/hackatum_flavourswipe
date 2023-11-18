@@ -3,8 +3,8 @@ from django.http import HttpResponse
 from rest_framework import viewsets
 from rest_framework import permissions
 
-from api.models import Recipe
-from api.serializers import UserSerializer, GroupSerializer, RecipeSerializer
+from api.models import Recipe, Ingredient
+from api.serializers import UserSerializer, GroupSerializer, RecipeSerializer, IngredientSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -32,6 +32,16 @@ class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
+class IngredientViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Ingredient.objects.all()
+    serializer_class = IngredientSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
