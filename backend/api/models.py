@@ -5,6 +5,9 @@ from django.db import models
 class Ingredient(models.Model):
     name = models.CharField(max_length=32)
 
+    def __str__(self):
+        return self.name
+
 
 class Recipe(models.Model):
     name = models.CharField(max_length=256)
@@ -13,3 +16,6 @@ class Recipe(models.Model):
     duration = models.IntegerField()
     ingredients = models.ManyToManyField(Ingredient)
     image_id = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.name
