@@ -25,6 +25,3 @@ class UserFeedback(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     feedback = models.IntegerField()
-
-    def __str__(self):
-        return self.recipe.name + ": " + self.user_id + ' > ' + str(self.feedback)
