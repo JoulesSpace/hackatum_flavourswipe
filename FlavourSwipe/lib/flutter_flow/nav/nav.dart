@@ -108,10 +108,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         builder: (context, state) => const CheckoutWidget(),
       ),
       GoRoute(
-        path: '/ranking',
-        builder: (context, state) => const RankingPageWidget(),
-      ),
-      GoRoute(
         path: '/onboarding',
         builder: (context, state) => const OnboardingWidget(),
       ),

@@ -24,18 +24,18 @@ class _SwipeDetailPageWidgetState extends State<SwipeDetailPageWidget> {
   @override
   void initState() {
     super.initState();
-    loadRecipeData();
     _model = createModel(context, () => SwipeDetailPageModel());
+    loadRecipeData();
   }
 
   void loadRecipeData() async {
     try {
       int recipeIdInt = int.parse(widget.recipeId);
-      setState(() async {
-        recipeData = await getRecipeData(recipeIdInt);
+      var loadedRecipeData = await getRecipeData(recipeIdInt);
+      setState(() {
+        recipeData = loadedRecipeData;
       });
     } catch (e) {
-      // Fehlerbehandlung, z.B. Anzeigen einer Fehlermeldung
       print('Error loading recipe data: $e');
     }
   }
@@ -82,7 +82,7 @@ class _SwipeDetailPageWidgetState extends State<SwipeDetailPageWidget> {
               ),
               onPressed: () async {
                 try {
-                  GoRouter.of(context).pop();
+                  Navigator.pop(context);
                 } catch (e) {
                   print('Fehler beim Zurückkehren: $e');
                 }
@@ -118,7 +118,7 @@ class _SwipeDetailPageWidgetState extends State<SwipeDetailPageWidget> {
                             topRight: Radius.circular(0.0),
                           ),
                           child: Image.network(
-                            recipeData!.imageUrl,
+                            "http://10.0.2.2:8000/static/${recipeData!.imageUrl}",
                             width: MediaQuery.sizeOf(context).width * 1.0,
                             height: MediaQuery.sizeOf(context).height * 1.0,
                             fit: BoxFit.cover,
