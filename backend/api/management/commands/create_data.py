@@ -1,8 +1,8 @@
 import csv
 import os
 import random
-
 import requests
+
 from django.core.management.base import BaseCommand
 from openai import OpenAI
 
@@ -25,7 +25,7 @@ def create_prompt(arg):
         api_key="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",
     )
 
-    response = chat_completion = client.chat.completions.create(
+    response = client.chat.completions.create(
         messages=[
             {
                 "role": "user",
@@ -35,8 +35,7 @@ def create_prompt(arg):
         model="gpt-3.5-turbo",
     )
 
-    contentString = response.choices[0].message.content
-    return contentString
+    return response.choices[0].message.content
 
 
 def create_image(arg):
@@ -80,24 +79,22 @@ class Command(BaseCommand):
 
         recipeIndex = 0
 
-        for recipeName in recipeNames:
-            randomDifficulty = random.randint(1, 6)
-            randomDuration = random.randint(10, 121)
-            associatedDescription = create_prompt(recipeName)
-            print(associatedDescription)
-            imageUrl = create_image(recipeName)
-            print(imageUrl)
-            new_image_url = download_image(imageUrl, recipeName)
-            recipe = Recipe(id=random.randint(1, 100000), name=recipeName, description=associatedDescription,
-                            difficulty=randomDifficulty, duration=randomDuration, image_id=new_image_url)
+        for recipe_name in recipeNames:
+            print("Generate data for ", recipe_name)
+            difficulty = random.randint(1, 6)
+            duration = random.randint(10, 121)
+            description = create_prompt(recipe_name)
+            image_url = create_image(recipe_name)
+            new_image_url = download_image(image_url, recipe_name)
+            recipe = Recipe(id=random.randint(1, 100000), name=recipe_name, description=description,
+                            difficulty=difficulty, duration=duration, image_id=new_image_url)
             recipe.save()
             for ingredientName in recipeIngredients[recipeIndex]:
                 if (not Ingredient.objects.filter(name=ingredientName).exists()):
+                    # Only if no duplicate exists
                     ingredient = Ingredient(id=random.randint(1, 100000), name=ingredientName)
                     ingredient.save()
                     recipe.ingredients.add(ingredient)
-                else:
-                    print("Duplicate detected")
             recipeIndex += 1
 
-        self.stdout.write(self.style.SUCCESS('Successfully executed your custom command'))
+        self.stdout.write(self.style.SUCCESS('Successfully generated recipes database and AI images'))
