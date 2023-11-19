@@ -1,8 +1,8 @@
 import csv
 import os
 import random
-
 import requests
+
 from django.core.management.base import BaseCommand
 from openai import OpenAI
 
@@ -25,7 +25,7 @@ def create_prompt(arg):
         api_key="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",
     )
 
-    response = chat_completion = client.chat.completions.create(
+    response = client.chat.completions.create(
         messages=[
             {
                 "role": "user",
@@ -35,8 +35,7 @@ def create_prompt(arg):
         model="gpt-3.5-turbo",
     )
 
-    contentString = response.choices[0].message.content
-    return contentString
+    return response.choices[0].message.content
 
 
 def create_image(arg):
@@ -83,6 +82,7 @@ class Command(BaseCommand):
         ingredientId = len(recipeNames)
 
 
+
         for recipeName in recipeNames:
             randomDifficulty = random.randint(1, 6)
             randomDuration = random.randint(10, 121)
@@ -98,13 +98,16 @@ class Command(BaseCommand):
             for ingredientName in recipeIngredients[recipeIndex]:
                 if (not Ingredient.objects.filter(name=ingredientName).exists()):
                     ingredient = Ingredient(id=ingredientId, name=ingredientName)
+
                     ingredient.save()
                     ingredientId+=1
                     recipe.ingredients.add(ingredient)
+
                 else:
                     print("Duplicate Ingredient detected")
                     existingIngredientEntity = Ingredient.objects.get(name=ingredientName)
                     recipe.add(existingIngredientEntity)
+
             recipeIndex += 1
 
-        self.stdout.write(self.style.SUCCESS('Successfully executed your custom command'))
+        self.stdout.write(self.style.SUCCESS('Successfully generated recipes database and AI images'))
