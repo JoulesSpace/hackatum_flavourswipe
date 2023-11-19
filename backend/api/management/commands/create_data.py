@@ -78,23 +78,36 @@ class Command(BaseCommand):
                     recipeIngredients.append(row[1:])
 
         recipeIndex = 0
+        recipeId = 0
+        ingredientId = len(recipeNames)
 
-        for recipe_name in recipeNames:
-            print("Generate data for ", recipe_name)
-            difficulty = random.randint(1, 6)
-            duration = random.randint(10, 121)
-            description = create_prompt(recipe_name)
-            image_url = create_image(recipe_name)
-            new_image_url = download_image(image_url, recipe_name)
-            recipe = Recipe(id=random.randint(1, 100000), name=recipe_name, description=description,
-                            difficulty=difficulty, duration=duration, image_id=new_image_url)
+
+
+        for recipeName in recipeNames:
+            randomDifficulty = random.randint(1, 6)
+            randomDuration = random.randint(10, 121)
+            associatedDescription = create_prompt(recipeName)
+            print(associatedDescription)
+            imageUrl = create_image(recipeName)
+            print(imageUrl)
+            new_image_url = download_image(imageUrl, recipeName)
+            recipe = Recipe(id=recipeId, name=recipeName, description=associatedDescription,
+                            difficulty=randomDifficulty, duration=randomDuration, image_id=new_image_url)
+            recipeId+=1
             recipe.save()
             for ingredientName in recipeIngredients[recipeIndex]:
                 if (not Ingredient.objects.filter(name=ingredientName).exists()):
-                    # Only if no duplicate exists
-                    ingredient = Ingredient(id=random.randint(1, 100000), name=ingredientName)
+                    ingredient = Ingredient(id=ingredientId, name=ingredientName)
+
                     ingredient.save()
+                    ingredientId+=1
                     recipe.ingredients.add(ingredient)
+
+                else:
+                    print("Duplicate Ingredient detected")
+                    existingIngredientEntity = Ingredient.objects.get(name=ingredientName)
+                    recipe.add(existingIngredientEntity)
+
             recipeIndex += 1
 
         self.stdout.write(self.style.SUCCESS('Successfully generated recipes database and AI images'))
