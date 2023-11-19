@@ -6,14 +6,16 @@ import random
 from threading import local
 import json
 
-def get_recipes(conn):
+def get_recipes(conn, exclude_ids=[]):
     """
     Get recipes from database
 
     :param conn: database connection
+    :param exclude_ids: ids of recipes to exclude
     :return: recipes as a mapping from recipe id to list of ingredient ids
     """
-    recipes = pd.read_sql_query("SELECT * FROM api_recipe", conn)
+    recipes = pd.read_sql_query("SELECT * FROM api_recipe WHERE id NOT IN (" + ','.join([str(id) for id in exclude_ids]) + ")", conn)
+
     recipe_to_ingridient = pd.read_sql_query("SELECT * FROM api_recipe_ingredients", conn)
     recipes = recipes.merge(recipe_to_ingridient, left_on='id', right_on='recipe_id')
     recipes = pd.DataFrame(recipes.groupby(['recipe_id', 'name', 'description'])['ingredient_id'].apply(list))
@@ -120,9 +122,9 @@ def get_sqlite_connection():
     return thread_local_storage.connection
 
 
-def get_next_recommendation(recipe_id):
+def get_next_recommendation(recipe_id, exclude_ids=[]):
     conn = get_sqlite_connection()
-    recipes = get_recipes(conn)
+    recipes = get_recipes(conn, exclude_ids=exclude_ids)
 
     # We have translate the database id to the index in the recipes list
     print(recipe_id)
@@ -135,4 +137,8 @@ def get_next_recommendation(recipe_id):
     # load from database based on recipe_id
     recommeded_id = recommendations[0]['recipe_id']
     selected_recipe = pd.read_sql_query("SELECT * FROM api_recipe WHERE id = " + str(recommeded_id), conn).to_dict('records')
-    return json.dumps(selected_recipe)
+
+    if len(selected_recipe) == 0:
+        return json.dumps("No recipe found")
+
+    return json.dumps(selected_recipe[0])

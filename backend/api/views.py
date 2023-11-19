@@ -48,7 +48,7 @@ class IngredientViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-def recommend(request, id):
+def recommend(request, id, exclude_ids):
     """
     Recommend a recipe based on the recipe with the given id
 
@@ -63,12 +63,23 @@ def recommend(request, id):
     # We recommend similar recipes to the recipe with id 1
     # Based on the user feedback in the database we adjust the recommendations by adjusting the similarity between recipes
 
+    # Example requests:
+    # http://127.0.0.1:8000/api/recommend/2/-1/
+    # Initially call this as default. It will exclude the recipe with id -1 from the recommendations which does not exist
+
+    # Afterwards, append every recipe id that the user has seen and liked to the exclude_ids list
+    # E.g. http://127.0.0.1:8000/api/recommend/2/1,5,3/
+    # if the user has seen recipes with id 1, 5 and 3
+
+    exclude_ids = exclude_ids.split(',')
+    exclude_ids = [int(id) for id in exclude_ids]
+
     elem = Recipe.objects.filter(id=id)
     if len(elem) == 0:
         # TODO: Alternatively return random recipe in the error case
-        return HttpResponse(f"Recipe with id {id} does not exist")
+        return HttpResponse(f"Recipe with id {id} does not exist. Excluded ids from search: {', '.join([str(id) for id in exclude_ids])}")
 
-    recommendation = get_next_recommendation(id)
+    recommendation = get_next_recommendation(id, exclude_ids=exclude_ids)
     return HttpResponse(f"{recommendation}")
 
 
@@ -79,16 +90,16 @@ class CustomAutoSchema(AutoSchema):
 
 
 class LikeView(APIView):
-    def get(self, request, pk):
-        feedback = UserFeedback(feedback=1, recipe_id=pk, user=request.user)
+    def post(self, request, recipeId):
+        feedback = UserFeedback(feedback=1, recipe_id=recipeId, user=request.user)
         feedback.save()
         # Implement logic to handle liking
         return Response({'message': 'Liked successfully!'}, status=status.HTTP_200_OK)
 
 
 class DislikeView(APIView):
-    def get(self, request, pk):
-        feedback = UserFeedback(feedback=-1, recipe_id=pk, user=request.user)
+    def post(self, request, recipeId):
+        feedback = UserFeedback(feedback=-1, recipe_id=recipeId, user=request.user)
         feedback.save()
         # Implement logic to handle disliking
         return Response({'message': 'Disliked successfully!'}, status=status.HTTP_200_OK)
