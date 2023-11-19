@@ -79,6 +79,9 @@ class Command(BaseCommand):
                     recipeIngredients.append(row[1:])
 
         recipeIndex = 0
+        recipeId = 0
+        ingredientId = len(recipeNames)
+
 
         for recipeName in recipeNames:
             randomDifficulty = random.randint(1, 6)
@@ -88,16 +91,20 @@ class Command(BaseCommand):
             imageUrl = create_image(recipeName)
             print(imageUrl)
             new_image_url = download_image(imageUrl, recipeName)
-            recipe = Recipe(id=random.randint(1, 100000), name=recipeName, description=associatedDescription,
+            recipe = Recipe(id=recipeId, name=recipeName, description=associatedDescription,
                             difficulty=randomDifficulty, duration=randomDuration, image_id=new_image_url)
+            recipeId+=1
             recipe.save()
             for ingredientName in recipeIngredients[recipeIndex]:
                 if (not Ingredient.objects.filter(name=ingredientName).exists()):
-                    ingredient = Ingredient(id=random.randint(1, 100000), name=ingredientName)
+                    ingredient = Ingredient(id=ingredientId, name=ingredientName)
                     ingredient.save()
+                    ingredientId+=1
                     recipe.ingredients.add(ingredient)
                 else:
-                    print("Duplicate detected")
+                    print("Duplicate Ingredient detected")
+                    existingIngredientEntity = Ingredient.objects.get(name=ingredientName)
+                    recipe.add(existingIngredientEntity)
             recipeIndex += 1
 
         self.stdout.write(self.style.SUCCESS('Successfully executed your custom command'))
