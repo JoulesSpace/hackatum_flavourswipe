@@ -15,6 +15,6 @@ urlpatterns = [
     path("recommend/<int:id>/<str:exclude_ids>/", views.recommend, name="recommend"),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('like/<int:pk>/', LikeView.as_view(), name='like'),
-    path('dislike/<int:pk>/', DislikeView.as_view(), name='dislike'),
+    path('like/<int:recipeId>/', LikeView.as_view(), name='like'),
+    path('dislike/<int:recipeId>/', DislikeView.as_view(), name='dislike'),
 ]
