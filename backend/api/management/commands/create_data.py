@@ -17,6 +17,8 @@ def download_image(url,recipeName):
         for chunk in response.iter_content(chunk_size=128):
             file.write(chunk)
 
+    return image_name
+
 
 def create_prompt(arg):
     
@@ -91,8 +93,8 @@ class Command(BaseCommand):
             print(associatedDescription)
             imageUrl = create_image(recipeName)
             print(imageUrl)
-            download_image(imageUrl,recipeName)
-            recipe = Recipe(id =  random.randint(1,100000) , name = recipeName, description = associatedDescription, difficulty = randomDifficulty, duration = randomDuration, image_id = imageUrl)
+            new_image_url = download_image(imageUrl,recipeName)
+            recipe = Recipe(id =  random.randint(1,100000) , name = recipeName, description = associatedDescription, difficulty = randomDifficulty, duration = randomDuration, image_id = new_image_url)
             recipe.save()
             for ingredientName in recipeIngredients[recipeIndex]:
                 if(not Ingredient.objects.filter(name=ingredientName).exists()):
