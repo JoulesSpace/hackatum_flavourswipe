@@ -18,9 +18,6 @@ recommendation algorithms to deliver personalized recipe suggestions.
 | Frontend | Flutter               |
 | Backend | Python, Django, SQLite |
 
-## Frontend
-
-## Backend
 
 To get started, we need a working Python environment.
 We need to move to the 'backend' directory and install all dependencies:
@@ -72,12 +69,19 @@ POST http://localhost:8000/api/dislike/<receiptId>/
 
 ### Get a receipt recommendation
 ```
-POST http://localhost:8000/api/recommend/<receiptId>/<exclueReceiptIds>/
+GET http://localhost:8000/api/recommend/<receiptId>/<exclueReceiptIds>/
 ```
 The first time, the receiptId needs to be random, but after that we pass
 the current receiptId. For excludeReceiptId we pass all Ids of Receipts
 that has been shown previously, separated by comma. As a result we get
 a JSON that recommends a similar receipt.
+
+### Get a receipt recommendation
+```
+GET http://localhost:8000/api/recommendation/
+```
+This method gives you 5 recipes that you may like, but don't know yet. 
+The recommendations are based on similar items you liked or disliked. 
 
 ## Scripts
 
