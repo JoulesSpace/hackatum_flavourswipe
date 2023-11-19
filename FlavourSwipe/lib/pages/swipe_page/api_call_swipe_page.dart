@@ -36,6 +36,29 @@ Future<List<Recipe>> getRecipeDataList() async {
   }
 }
 
+Future<Recipe> getRecipeData(int recipeId) async {
+  print("API-Funktion aufgerufen!");
+  var url =
+      Uri.parse('http://10.0.2.2:8000/api/recipe/${recipeId.toString()}/');
+  var response = await http.get(
+    url,
+    headers: {
+      'Content-Type': 'application/json',
+      HttpHeaders.authorizationHeader: 'Basic $encoded',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    // Wenn der Aufruf erfolgreich ist, die Antwort deserialisieren und ein Recipe-Objekt zurückgeben
+    Map<String, dynamic> data = json.decode(response.body);
+    return Recipe.fromJson(data);
+  } else {
+    // Wenn der Aufruf fehlschlägt, eine Ausnahme werfen
+    throw Exception(
+        'Failed to load recipe. Status code: ${response.statusCode}, Response: ${response.body}');
+  }
+}
+
 class Recipe {
   final int id;
   final int cookingTime;
@@ -62,21 +85,5 @@ class Recipe {
       description: json['description'],
       imageUrl: json['image_id'],
     );
-  }
-}
-
-// Django Backend Call
-Future<void> getRecipeData(String username, String password) async {
-  var url = Uri.parse('http://10.0.2.2:8000/api/recipe/');
-  var response = await http
-      .post(url, body: {'username': "admin", 'password': "123456789."});
-
-  if (response.statusCode == 200) {
-    // Verarbeiten der Antwort
-    print('Response data: ${response.body}');
-  } else {
-    // Fehlerbehandlung
-    print('Failed to call API. Status code: ${response.statusCode}');
-    print('Response body: ${response.body}');
   }
 }

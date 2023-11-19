@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flavour_swipe/pages/swipe_page/test.dart';
+import 'package:flavour_swipe/pages/swipe_page/api_call_swipe_page.dart';
 
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_swipeable_stack.dart';
@@ -35,7 +35,6 @@ class _SwipePageWidgetState extends State<SwipePageWidget> {
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
@@ -103,7 +102,14 @@ class _SwipePageWidgetState extends State<SwipePageWidget> {
                       onLeftSwipe: (index) {},
                       onRightSwipe: (index) {},
                       onUpSwipe: (index) async {
-                        GoRouter.of(context).push('/swipeDetail');
+                        // Abrufen der aktuellen Rezept-ID
+                        Recipe currentRecipe = snapshot.data![index];
+                        int recipeId = currentRecipe.id;
+                        print(recipeId);
+                        // Navigation mit Übergabe der Rezept-ID
+                        context.goNamed("swipeDetail", pathParameters: {
+                          'recipeId': recipeId.toString(),
+                        });
                       },
                       onDownSwipe: (index) {},
                       itemBuilder: (context, index) {

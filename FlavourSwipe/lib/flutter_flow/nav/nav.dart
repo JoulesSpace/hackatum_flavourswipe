@@ -96,8 +96,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) {
         builder: (context, state) => const CreateAccount1Widget(),
       ),
       GoRoute(
-        path: '/swipeDetail',
-        builder: (context, state) => const SwipeDetailPageWidget(),
+        path:
+            '/swipeDetail/:recipeId', // 👈 Defination of params in the path is important
+        name: 'swipeDetail',
+        builder: (context, state) => SwipeDetailPageWidget(
+          recipeId: state.pathParameters['recipeId']!,
+        ),
       ),
       GoRoute(
         path: '/checkout',
