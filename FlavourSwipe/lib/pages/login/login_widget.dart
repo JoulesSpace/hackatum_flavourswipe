@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -9,12 +10,21 @@ import 'login_model.dart';
 export 'login_model.dart';
 import 'package:http/http.dart' as http;
 
+String username = "admin";
+String password = "123456789.";
+String credentials = "${username}:${password}";
+String encoded = utf8.fuse(base64).encode(credentials);
+
 // Django Backend Call
 Future<void> loginUser(String username, String password) async {
   var url = Uri.parse('http://10.0.2.2:8000/api/recipe/');
-  var response =
-      await http.post(url, body: {'username': username, 'password': password});
-
+  var response = await http.get(
+    url,
+    headers: {
+      'Content-Type': 'application/json',
+      HttpHeaders.authorizationHeader: 'Basic ${encoded}',
+    },
+  );
   if (response.statusCode == 200) {
     var data = json.decode(response.body);
     print("data:\n");
