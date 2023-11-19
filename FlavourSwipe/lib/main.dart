@@ -56,6 +56,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'FlavourSwipe',
+      debugShowCheckedModeBanner: false,
       locale: _locale,
       theme: ThemeData(
         brightness: Brightness.light,
