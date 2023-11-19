@@ -12,8 +12,8 @@ import requests
 
 def download_image(url,recipeName):
     response = requests.get(url, stream=True)
-    image_name = recipeName.replace(" ", "_").lower()
-    with open("./static/"+image_name+".jpg", 'wb') as file:
+    image_name = recipeName.replace(" ", "_").lower()+".jpg"
+    with open("./static/"+image_name, 'wb') as file:
         for chunk in response.iter_content(chunk_size=128):
             file.write(chunk)
 
