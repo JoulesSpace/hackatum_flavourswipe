@@ -90,16 +90,16 @@ class CustomAutoSchema(AutoSchema):
 
 
 class LikeView(APIView):
-    def get(self, request, pk):
-        feedback = UserFeedback(feedback=1, recipe_id=pk, user=request.user)
+    def post(self, request, recipeId):
+        feedback = UserFeedback(feedback=1, recipe_id=recipeId, user=request.user)
         feedback.save()
         # Implement logic to handle liking
         return Response({'message': 'Liked successfully!'}, status=status.HTTP_200_OK)
 
 
 class DislikeView(APIView):
-    def get(self, request, pk):
-        feedback = UserFeedback(feedback=-1, recipe_id=pk, user=request.user)
+    def post(self, request, recipeId):
+        feedback = UserFeedback(feedback=-1, recipe_id=recipeId, user=request.user)
         feedback.save()
         # Implement logic to handle disliking
         return Response({'message': 'Disliked successfully!'}, status=status.HTTP_200_OK)
