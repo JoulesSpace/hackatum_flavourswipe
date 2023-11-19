@@ -3,4 +3,3 @@ django-rest-framework
 openai
 pandas
 scikit-learn
-sklearn
