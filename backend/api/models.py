@@ -2,7 +2,6 @@ from django.conf import settings
 from django.db import models
 
 
-# Create your models here.
 class Ingredient(models.Model):
     name = models.CharField(max_length=32)
 
@@ -26,3 +25,6 @@ class UserFeedback(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     feedback = models.IntegerField()
+
+    def __str__(self):
+        return self.recipe.name + ": " + self.user.name + ' > ' + self.feedback

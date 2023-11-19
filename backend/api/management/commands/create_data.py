@@ -1,13 +1,23 @@
-# your_app/management/commands/my_custom_command.py
 import csv
 import os
 import random
 
+import requests
 from django.core.management.base import BaseCommand
 from openai import OpenAI
 
 from api.models import Ingredient
 from api.models import Recipe
+
+
+def download_image(url, recipeName):
+    response = requests.get(url, stream=True)
+    image_name = recipeName.replace(" ", "_").lower() + ".jpg"
+    with open("./static/" + image_name, 'wb') as file:
+        for chunk in response.iter_content(chunk_size=128):
+            file.write(chunk)
+
+    return image_name
 
 
 def create_prompt(arg):
@@ -49,7 +59,6 @@ def create_image(arg):
 class Command(BaseCommand):
 
     def add_arguments(self, parser):
-        # Define the arguments here
         parser.add_argument('arg1', type=str, help='Path to a file')
 
     def handle(self, *args, **options):
@@ -78,13 +87,17 @@ class Command(BaseCommand):
             print(associatedDescription)
             imageUrl = create_image(recipeName)
             print(imageUrl)
+            new_image_url = download_image(imageUrl, recipeName)
             recipe = Recipe(id=random.randint(1, 100000), name=recipeName, description=associatedDescription,
-                            difficulty=randomDifficulty, duration=randomDuration, image_id=imageUrl)
+                            difficulty=randomDifficulty, duration=randomDuration, image_id=new_image_url)
             recipe.save()
             for ingredientName in recipeIngredients[recipeIndex]:
-                ingredient = Ingredient(id=random.randint(1, 100000), name=ingredientName)
-                ingredient.save()
-                recipe.ingredients.add(ingredient)
+                if (not Ingredient.objects.filter(name=ingredientName).exists()):
+                    ingredient = Ingredient(id=random.randint(1, 100000), name=ingredientName)
+                    ingredient.save()
+                    recipe.ingredients.add(ingredient)
+                else:
+                    print("Duplicate detected")
             recipeIndex += 1
 
         self.stdout.write(self.style.SUCCESS('Successfully executed your custom command'))
