@@ -1,3 +1,5 @@
+import 'package:flavour_swipe/pages/swipe_page/api_call_swipe_page.dart';
+
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -8,7 +10,9 @@ import 'ranking_page_model.dart';
 export 'ranking_page_model.dart';
 
 class RankingPageWidget extends StatefulWidget {
-  const RankingPageWidget({super.key});
+  final List<int> recipeIds;
+
+  RankingPageWidget({Key? key, required this.recipeIds}) : super(key: key);
 
   @override
   _RankingPageWidgetState createState() => _RankingPageWidgetState();
@@ -16,6 +20,7 @@ class RankingPageWidget extends StatefulWidget {
 
 class _RankingPageWidgetState extends State<RankingPageWidget> {
   late RankingPageModel _model;
+  List<Recipe>? recipes;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -23,6 +28,7 @@ class _RankingPageWidgetState extends State<RankingPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => RankingPageModel());
+    loadAndProcessRecipes();
   }
 
   @override
@@ -30,6 +36,19 @@ class _RankingPageWidgetState extends State<RankingPageWidget> {
     _model.dispose();
 
     super.dispose();
+  }
+
+  Future<void> loadAndProcessRecipes() async {
+    try {
+      List<Recipe> loadedRecipes =
+          await getRecipesDataListIDs(widget.recipeIds);
+      setState(() {
+        recipes =
+            loadedRecipes; // Aktualisieren des Zustands mit den geladenen Rezepten
+      });
+    } catch (e) {
+      print('Fehler beim Laden der Rezeptdaten: $e');
+    }
   }
 
   @override
@@ -80,7 +99,8 @@ class _RankingPageWidgetState extends State<RankingPageWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
                 child: Container(
                   width: MediaQuery.sizeOf(context).width * 1.0,
                   decoration: BoxDecoration(
@@ -100,8 +120,8 @@ class _RankingPageWidgetState extends State<RankingPageWidget> {
                     ),
                   ),
                   child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 0.0, 0.0, 12.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -177,200 +197,200 @@ class _RankingPageWidgetState extends State<RankingPageWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(15.0, 25.0, 0.0, 0.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        15.0, 25.0, 0.0, 0.0),
                     child: Text(
                       'Mahlzeiten',
                       style: FlutterFlowTheme.of(context).labelMedium,
                     ),
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 24.0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 12.0, 0.0, 24.0),
                     child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 12.0, 16.0, 0.0),
-                            child: Container(
-                              width: double.infinity,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                boxShadow: const [
-                                  BoxShadow(
-                                    blurRadius: 3.0,
-                                    color: Color(0x32000000),
-                                    offset: Offset(0.0, 1.0),
-                                  )
-                                ],
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: const BorderRadius.only(
-                                      bottomLeft: Radius.circular(8.0),
-                                      bottomRight: Radius.circular(0.0),
-                                      topLeft: Radius.circular(8.0),
-                                      topRight: Radius.circular(0.0),
-                                    ),
-                                    child: Image.network(
-                                      'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHwzfHxmb29kfGVufDB8fHx8MTcwMDIyODMyMXww&ixlib=rb-4.0.3&q=80&w=1080',
-                                      width: 100.0,
-                                      height: 100.0,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(
-                                        12.0, 0.0, 0.0, 0.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Text(
-                                              'Buddah Bowl',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .headlineSmall,
-                                            ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 4.0, 0.0, 0.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 4.0, 0.0, 0.0),
-                                                child: Text(
-                                                  'Montag',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodySmall
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        fontSize: 20.0,
-                                                      ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        25.0, 0.0, 0.0, 0.0),
-                                                child: Text(
-                                                  '57 €',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .headlineMedium
-                                                      .override(
-                                                        fontFamily: 'Outfit',
-                                                        fontSize: 20.0,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: const AlignmentDirectional(1.00, 0.00),
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          10.0, 10.0, 10.0, 10.0),
-                                      child: Theme(
-                                        data: ThemeData(
-                                          checkboxTheme: CheckboxThemeData(
-                                            visualDensity:
-                                                VisualDensity.compact,
-                                            materialTapTargetSize:
-                                                MaterialTapTargetSize
-                                                    .shrinkWrap,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(4.0),
-                                            ),
-                                          ),
-                                          unselectedWidgetColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondaryText,
-                                        ),
-                                        child: Checkbox(
-                                          value: _model.checkboxValue ??= true,
-                                          onChanged: (newValue) async {
-                                            setState(() => _model
-                                                .checkboxValue = newValue!);
-                                          },
-                                          activeColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primary,
-                                          checkColor:
-                                              FlutterFlowTheme.of(context).info,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                      child: recipes == null
+                          ? const CircularProgressIndicator()
+                          : Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                buildCardFoodFav(context, recipes![0].imageUrl,
+                                    recipes![0].title, "Montag", 57),
+                                buildCardFoodFav(context, recipes![1].imageUrl,
+                                    recipes![1].title, "Mittwoch", 98),
+                                buildCardFoodFav(context, recipes![2].imageUrl,
+                                    recipes![2].title, "Donnerstag", 87),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
                     ),
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(50.0, 50.0, 50.0, 50.0),
-                child: FFButtonWidget(
-                  onPressed: () async {
-                    context.pushNamed('Checkout');
-                  },
-                  text: 'Bestellen',
-                  options: FFButtonOptions(
-                    height: 40.0,
-                    padding:
-                        const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                    iconPadding:
-                        const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primary,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Readex Pro',
-                          color: Colors.white,
+              const ButtonBestellen(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding buildCardFoodFav(BuildContext context, String imageURL, String title,
+      String weekday, int price) {
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+      child: Container(
+        width: double.infinity,
+        height: 100.0,
+        decoration: BoxDecoration(
+          color: FlutterFlowTheme.of(context).secondaryBackground,
+          boxShadow: const [
+            BoxShadow(
+              blurRadius: 3.0,
+              color: Color(0x32000000),
+              offset: Offset(0.0, 1.0),
+            )
+          ],
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(8.0),
+                bottomRight: Radius.circular(0.0),
+                topLeft: Radius.circular(8.0),
+                topRight: Radius.circular(0.0),
+              ),
+              child: Image.network(
+                "http://10.0.2.2:8000/static/${imageURL}",
+                width: 100.0,
+                height: 100.0,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(12.0, 0.0, 0.0, 0.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Text(
+                        title,
+                        style: FlutterFlowTheme.of(context).bodySmall.override(
+                              fontFamily: 'Readex Pro',
+                              fontSize: 18.0,
+                            ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 4.0, 0.0, 0.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 4.0, 0.0, 0.0),
+                          child: Text(
+                            weekday,
+                            style:
+                                FlutterFlowTheme.of(context).bodySmall.override(
+                                      fontFamily: 'Readex Pro',
+                                      fontSize: 15.0,
+                                    ),
+                          ),
                         ),
-                    elevation: 3.0,
-                    borderSide: const BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              25.0, 0.0, 0.0, 0.0),
+                          child: Text(
+                            "${price.toString()} €",
+                            style: FlutterFlowTheme.of(context)
+                                .headlineMedium
+                                .override(
+                                  fontFamily: 'Outfit',
+                                  fontSize: 20.0,
+                                ),
+                          ),
+                        ),
+                      ],
                     ),
-                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ],
+              ),
+            ),
+            Align(
+              alignment: const AlignmentDirectional(1.00, 0.00),
+              child: Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(
+                    10.0, 10.0, 10.0, 10.0),
+                child: Theme(
+                  data: ThemeData(
+                    checkboxTheme: CheckboxThemeData(
+                      visualDensity: VisualDensity.compact,
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4.0),
+                      ),
+                    ),
+                    unselectedWidgetColor:
+                        FlutterFlowTheme.of(context).secondaryText,
+                  ),
+                  child: Checkbox(
+                    value: _model.checkboxValue ??= true,
+                    onChanged: (newValue) async {
+                      setState(() => _model.checkboxValue = newValue!);
+                    },
+                    activeColor: FlutterFlowTheme.of(context).primary,
+                    checkColor: FlutterFlowTheme.of(context).info,
                   ),
                 ),
               ),
-            ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ButtonBestellen extends StatelessWidget {
+  const ButtonBestellen({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(50.0, 50.0, 50.0, 50.0),
+      child: FFButtonWidget(
+        onPressed: () async {
+          context.pushNamed('Checkout');
+        },
+        text: 'Bestellen',
+        options: FFButtonOptions(
+          height: 40.0,
+          padding: const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+          iconPadding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+          color: FlutterFlowTheme.of(context).primary,
+          textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                fontFamily: 'Readex Pro',
+                color: Colors.white,
+              ),
+          elevation: 3.0,
+          borderSide: const BorderSide(
+            color: Colors.transparent,
+            width: 1.0,
           ),
+          borderRadius: BorderRadius.circular(8.0),
         ),
       ),
     );
