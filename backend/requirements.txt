@@ -3,4 +3,4 @@ django-rest-framework
 openai
 sqlite3
 pandas
-sklearn
+scikit-learn
