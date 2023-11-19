@@ -88,6 +88,16 @@ The following command imports all recipes in the database and creates a image us
 python manage.py create_data data/Recipes.csv
 ```
 
+### Clear user swiping feedback data
+```
+python manage.py clear_feedback
+```
+
+### Clear recipes data
+```
+python manage.py clear_recipes
+```
+
 
 ## Acknowledgments
 Hello Fresh for providing an exciting challenge for our hackathon.
