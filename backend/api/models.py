@@ -27,4 +27,4 @@ class UserFeedback(models.Model):
     feedback = models.IntegerField()
 
     def __str__(self):
-        return self.recipe.name + ": " + self.user.name + ' > ' + self.feedback
+        return self.recipe.name + ": " + self.user_id + ' > ' + str(self.feedback)
