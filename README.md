@@ -18,7 +18,7 @@ match your taste. Recipe imagery is generated on the fly with OpenAI's image API
 ## Demo
 
 <p align="center">
-  <img src="docs/screenshots/demo.gif" width="30%" alt="FlavourSwipe demo (login, swipe, recipe, weekly plan)">
+  <img src="docs/screenshots/demo.webp" width="30%" alt="FlavourSwipe demo (login, swipe, recipe, weekly plan)">
 </p>
 
 <p align="center">
