@@ -1,108 +1,150 @@
-# Hackatum FlavourSwipe
+# FlavourSwipe
 
-## Project Overview
-This repository contains the source code for a collaborative project 
-developed during the HackaTum Hackathon 2023. The goal of our project is 
-to create an engaging app, to provide a unique recipe-swiping experience, 
-similar to dating apps like Tinder. Our app incorporates sophisticated 
-recommendation algorithms to deliver personalized recipe suggestions.
+> Swipe your way to your next meal. A Tinder-style recipe discovery app that
+> learns your taste and recommends recipes you will actually want to cook.
+
+[![HackaTUM 2023](https://img.shields.io/badge/HackaTUM-2023-0065BD.svg)](https://hack.tum.de/)
+[![Challenge: HelloFresh](https://img.shields.io/badge/challenge-HelloFresh-91C11E.svg)](https://www.hellofresh.com/)
+[![Frontend: Flutter](https://img.shields.io/badge/frontend-Flutter-02569B.svg)](https://flutter.dev/)
+[![Backend: Django REST](https://img.shields.io/badge/backend-Django%20REST-092E20.svg)](https://www.django-rest-framework.org/)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB.svg)](https://www.python.org/)
+
+FlavourSwipe was built in 24 hours at **HackaTUM 2023** for the **HelloFresh**
+challenge. You swipe right on recipes you like and left on ones you do not; a
+content-based recommender learns from those swipes and surfaces new recipes that
+match your taste. Recipe imagery is generated on the fly with OpenAI's image API.
+
+## Demo
+
+![FlavourSwipe screenshot](FlavourSwipe/assets/images/Screenshot_2023-11-18_094305.png)
+
+A full walkthrough is in [`FlavourSwipe_video.mp4`](FlavourSwipe_video.mp4).
 
 ## Features
-- Recipe Swiping: Users can swipe through a curated selection of recipes, similar to dating apps.
-- Personalized Recommendations: Our recommendation algorithms analyze user preferences to offer personalized recipe suggestions.
 
-**Tech Stack**
+- **Swipe to discover** - browse a curated set of recipes with a familiar
+  left/right swipe interaction.
+- **Personalised recommendations** - a content-based engine ranks unseen recipes
+  by similarity to the ones you liked, and away from the ones you disliked.
+- **AI-generated recipe images** - dishes without a photo get one generated from
+  their name via the OpenAI image API.
+- **REST API** - a clean Django REST backend the Flutter client talks to.
 
-|  | Tech                  |
-| --- |-----------------------|
-| Frontend | Flutter               |
-| Backend | Python, Django, SQLite |
+## How it works
 
-
-To get started, we need a working Python environment.
-We need to move to the 'backend' directory and install all dependencies:
 ```
-pip install -r requirements.txt
-```
-
-Now, run our database migrations.
-```
-python manage.py migrate
+ Flutter app  ──HTTP/JSON──►  Django REST API  ──►  SQLite
+ (swipe UI)                   (recipes, feedback,    (recipes, ingredients,
+                               recommender)           user feedback)
+                                   │
+                                   └─►  OpenAI image API (recipe images)
 ```
 
-Next, we can create a user for the backend:
-```
-python manage.py createsuperuser --email mickymouse@disney.com --username admin
+The recommender (`backend/api/recommender.py`) is **content-based**:
+
+1. Each recipe is described by its ingredients (plus its text description).
+2. Those descriptions are vectorised with **TF-IDF** and compared with
+   **cosine similarity**, giving a recipe-to-recipe similarity matrix.
+3. Aggregated user feedback (likes count as +1, dislikes as -1) re-weights the
+   scores, so recommendations drift toward what you liked and away from what you
+   did not.
+4. The API returns the most similar recipes you have not seen yet.
+
+## Tech stack
+
+| Layer | Technology |
+|-------|------------|
+| Frontend | Flutter (Dart) |
+| Backend | Python, Django, Django REST Framework |
+| Database | SQLite |
+| Recommender | scikit-learn (TF-IDF + cosine similarity), pandas |
+| Image generation | OpenAI API |
+
+## Getting started
+
+### 1. Backend (Django API)
+
+```bash
+cd backend
+pip install -r requirements.txt        # django, djangorestframework, openai, pandas, scikit-learn, requests
+python manage.py migrate               # set up the SQLite schema
+python manage.py createsuperuser --email admin@example.com --username admin
 ```
 
-Finally let's run the server:
+Seed the database with recipes and generate an image for each (needs an OpenAI
+API key in your environment):
+
+```bash
+export OPENAI_API_KEY=sk-...           # Windows PowerShell: $env:OPENAI_API_KEY="sk-..."
+python manage.py create_data ../data/Recipes.csv
 ```
+
+Run the server:
+
+```bash
 python manage.py runserver
 ```
 
-**URLs:**
-- http://127.0.0.1:8000/admin/
-- http://127.0.0.1:8000/api/
+- Admin:  http://127.0.0.1:8000/admin/
+- API:    http://127.0.0.1:8000/api/
 
+### 2. Frontend (Flutter app)
 
-## API
-
-### Get a list of all recipes
-```
-GET http://localhost:8000/api/recipe/
-```
-
-### Get a list of all ingredients
-```
-GET http://localhost:8000/api/ingredient/
+```bash
+cd FlavourSwipe
+flutter pub get
+flutter run                            # pick a connected device or emulator
 ```
 
-### Submit a like for a receipt
-```
-POST http://localhost:8000/api/like/<receiptId>/
+Point the app at your backend URL if it is not running on the default localhost.
+
+## API reference
+
+Base URL: `http://localhost:8000/api`
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET`  | `/recipe/` | List all recipes |
+| `GET`  | `/ingredient/` | List all ingredients |
+| `POST` | `/like/<recipeId>/` | Record a like for a recipe |
+| `POST` | `/dislike/<recipeId>/` | Record a dislike for a recipe |
+| `GET`  | `/recommend/<recipeId>/<excludeRecipeIds>/` | Recommend one similar recipe |
+| `GET`  | `/recommendation/` | Get 5 recommended recipes you have not seen |
+
+For `/recommend/`, pass a random `recipeId` on the first call and the current
+recipe id thereafter; `excludeRecipeIds` is a comma-separated list of recipe ids
+already shown. The response is a similar recipe as JSON.
+
+## Management commands
+
+```bash
+python manage.py create_data ../data/Recipes.csv   # import recipes + generate AI images
+python manage.py clear_feedback                    # reset all swipe feedback
+python manage.py clear_recipes                     # remove all recipes
 ```
 
-### Submit a dislike for a receipt
+## Project structure
+
 ```
-POST http://localhost:8000/api/dislike/<receiptId>/
+backend/            Django project
+  api/              recipes, ingredients, feedback models, serializers, views,
+                    recommender.py, and management commands (create_data, ...)
+  flavourswipe/     Django settings / URLs / WSGI
+  manage.py
+FlavourSwipe/       Flutter app (lib/, assets/, android/, ios/)
+data/Recipes.csv    recipe dataset used to seed the backend
+FlavourSwipe_video.mp4   demo recording
 ```
 
-### Get a receipt recommendation
-```
-GET http://localhost:8000/api/recommend/<receiptId>/<exclueReceiptIds>/
-```
-The first time, the receiptId needs to be random, but after that we pass
-the current receiptId. For excludeReceiptId we pass all Ids of Receipts
-that has been shown previously, separated by comma. As a result we get
-a JSON that recommends a similar receipt.
+## Team
 
-### Get a receipt recommendation
-```
-GET http://localhost:8000/api/recommendation/
-```
-This method gives you 5 recipes that you may like, but don't know yet. 
-The recommendations are based on similar items you liked or disliked. 
-
-## Scripts
-
-### Generate images using AI for a list of recipes in a csv file
-In the directory 'data', we have csv file of recipes and their ingredients.
-The following command imports all recipes in the database and creates a image using AI.
-```
-python manage.py create_data data/Recipes.csv
-```
-
-### Clear user swiping feedback data
-```
-python manage.py clear_feedback
-```
-
-### Clear recipes data
-```
-python manage.py clear_recipes
-```
-
+Built at HackaTUM 2023 by Manuel Kienlein, Ivan Lomakov
+([@LivanKov](https://github.com/LivanKov)), Jakob Semmler, and Julia
+([@JoulesSpace](https://github.com/JoulesSpace)).
 
 ## Acknowledgments
-Hello Fresh for providing an exciting challenge for our hackathon.
-Contributors to the open-source libraries and frameworks used in this project.
+
+- **HelloFresh** for the hackathon challenge.
+- **HackaTUM 2023** organisers.
+- The open-source Flutter, Django REST Framework, scikit-learn, and pandas
+  communities.
