@@ -8,6 +8,7 @@
 [![Frontend: Flutter](https://img.shields.io/badge/frontend-Flutter-02569B.svg)](https://flutter.dev/)
 [![Backend: Django REST](https://img.shields.io/badge/backend-Django%20REST-092E20.svg)](https://www.django-rest-framework.org/)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-3776AB.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 FlavourSwipe was built in 24 hours at **HackaTUM 2023** for the **HelloFresh**
 challenge. You swipe right on recipes you like and left on ones you do not; a
@@ -16,9 +17,15 @@ match your taste. Recipe imagery is generated on the fly with OpenAI's image API
 
 ## Demo
 
-![FlavourSwipe screenshot](FlavourSwipe/assets/images/Screenshot_2023-11-18_094305.png)
+<p align="center">
+  <img src="docs/screenshots/01-login.png" width="22%" alt="Login screen">
+  <img src="docs/screenshots/03-swipe.png" width="22%" alt="Swiping through recipes">
+  <img src="docs/screenshots/02-recipe-card.png" width="22%" alt="Recipe card">
+  <img src="docs/screenshots/04-weekly-plan.png" width="22%" alt="Weekly meal plan">
+</p>
+<p align="center"><sub>Sign in &middot; swipe through recipes &middot; open a recipe &middot; get a weekly meal plan to order</sub></p>
 
-A full walkthrough is in [`FlavourSwipe_video.mp4`](FlavourSwipe_video.mp4).
+A full walkthrough is in the [demo video](FlavourSwipe_video.mp4).
 
 ## Features
 
@@ -141,6 +148,10 @@ FlavourSwipe_video.mp4   demo recording
 Built at HackaTUM 2023 by Manuel Kienlein, Ivan Lomakov
 ([@LivanKov](https://github.com/LivanKov)), Jakob Semmler, and Julia
 ([@JoulesSpace](https://github.com/JoulesSpace)).
+
+## License
+
+Released under the [MIT License](LICENSE).
 
 ## Acknowledgments
 
