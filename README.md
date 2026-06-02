@@ -18,6 +18,10 @@ match your taste. Recipe imagery is generated on the fly with OpenAI's image API
 ## Demo
 
 <p align="center">
+  <img src="docs/screenshots/demo.gif" width="30%" alt="FlavourSwipe demo (login, swipe, recipe, weekly plan)">
+</p>
+
+<p align="center">
   <img src="docs/screenshots/01-login.png" width="22%" alt="Login screen">
   <img src="docs/screenshots/03-swipe.png" width="22%" alt="Swiping through recipes">
   <img src="docs/screenshots/02-recipe-card.png" width="22%" alt="Recipe card">
@@ -25,7 +29,7 @@ match your taste. Recipe imagery is generated on the fly with OpenAI's image API
 </p>
 <p align="center"><sub>Sign in &middot; swipe through recipes &middot; open a recipe &middot; get a weekly meal plan to order</sub></p>
 
-A full walkthrough is in the [demo video](docs/screenshots/FlavourSwipe_video.mp4).
+Full-resolution walkthrough: [demo video](docs/screenshots/FlavourSwipe_video.mp4).
 
 ## Features
 
