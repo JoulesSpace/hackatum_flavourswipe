@@ -22,7 +22,7 @@ def download_image(url, recipeName):
 
 def create_prompt(arg):
     client = OpenAI(
-        api_key="<OPENAI_API_KEY>",
+        api_key=os.environ.get("OPENAI_API_KEY"),
     )
 
     response = client.chat.completions.create(
@@ -40,7 +40,7 @@ def create_prompt(arg):
 
 def create_image(arg):
     client = OpenAI(
-        api_key="<OPENAI_API_KEY>",
+        api_key=os.environ.get("OPENAI_API_KEY"),
     )
 
     response = client.images.generate(

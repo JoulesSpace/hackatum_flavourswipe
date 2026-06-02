@@ -1,4 +1,5 @@
 import json
+import os
 import re
 
 from django.core.management.base import BaseCommand, CommandError
@@ -23,7 +24,7 @@ class Command(BaseCommand):
 
             client = OpenAI(
                 # defaults to os.environ.get("OPENAI_API_KEY")
-                api_key="<OPENAI_API_KEY>",
+                api_key=os.environ.get("OPENAI_API_KEY"),
             )
 
             response = chat_completion = client.chat.completions.create(
