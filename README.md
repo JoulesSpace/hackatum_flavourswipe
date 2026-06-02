@@ -145,7 +145,11 @@ FlavourSwipe_video.mp4   demo recording
 
 ## Team
 
-Built at HackaTUM 2023 by Manuel Kienlein, Ivan Lomakov
+<p align="center">
+  <img src="docs/screenshots/team.jpeg" width="70%" alt="The FlavourSwipe team at HackaTUM 2023">
+</p>
+
+Built at HackaTUM 2023 (November 17-19) by Manuel Kienlein, Ivan Lomakov
 ([@LivanKov](https://github.com/LivanKov)), Jakob Semmler, and Julia
 ([@JoulesSpace](https://github.com/JoulesSpace)).
 
