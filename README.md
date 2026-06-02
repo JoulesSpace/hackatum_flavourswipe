@@ -25,7 +25,7 @@ match your taste. Recipe imagery is generated on the fly with OpenAI's image API
 </p>
 <p align="center"><sub>Sign in &middot; swipe through recipes &middot; open a recipe &middot; get a weekly meal plan to order</sub></p>
 
-A full walkthrough is in the [demo video](FlavourSwipe_video.mp4).
+A full walkthrough is in the [demo video](docs/screenshots/FlavourSwipe_video.mp4).
 
 ## Features
 
@@ -140,7 +140,7 @@ backend/            Django project
   manage.py
 FlavourSwipe/       Flutter app (lib/, assets/, android/, ios/)
 data/Recipes.csv    recipe dataset used to seed the backend
-FlavourSwipe_video.mp4   demo recording
+docs/screenshots/   app screenshots, team photo, and the demo recording
 ```
 
 ## Team
